@@ -29,6 +29,6 @@ export const onSubmit = async (
 
 const createLink = (data: string) => {
   return navigator.clipboard.writeText(
-    `${process.env.NEXT_PUBLIC_URL}/list?data=${data}`,
+    `${process.env.NEXT_PUBLIC_URL}/show/${data}`,
   )
 }

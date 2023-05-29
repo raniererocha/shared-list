@@ -8,12 +8,18 @@ import List from '../List'
 import { CreateListInterface } from './types'
 import { useState } from 'react'
 import { previewDataSchema } from '@/schemas'
-
-export default function ListForm() {
-  const methods = useForm<CreateListInterface>()
-  const title = methods.watch('title', '')
-  const data = methods.watch('data', '')
-  const isDisabled = data === '' || title === ''
+interface ListFormProps {
+  data: Pick<CreateListInterface, 'title' | 'data'> | undefined
+}
+export default function ListForm({ data: payload }: ListFormProps) {
+  const methods = useForm<CreateListInterface>({
+    defaultValues: payload,
+  })
+  const title = methods.watch('title', payload?.title)
+  const data = methods.watch('data', payload?.data)
+  const titleIsEmpty = title === '' || title === undefined
+  const dataIsEmpty = data === '' || data === undefined
+  const isDisabled = titleIsEmpty || dataIsEmpty
   const [isOpen, setIsOpen] = useState(false)
   return (
     <form
@@ -22,7 +28,7 @@ export default function ListForm() {
     >
       <div className="px-6 h-full flex flex-col gap-4 py-2">
         <h1 className="font-semibold text-2xl text-center mb-4">
-          Criar nova lista
+          {payload !== undefined ? 'Editar' : 'Criar nova lista'}
         </h1>
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex flex-col gap-1">
@@ -77,9 +83,7 @@ export default function ListForm() {
       </div>
       <Modal isOpen={isOpen} onClose={() => setIsOpen((prev) => !prev)}>
         <div className="flex flex-col gap-4 py-4 ">
-          <h1 className="text-center font-semibold text-2xl">
-            {methods.watch('title', '')}
-          </h1>
+          <h1 className="text-center font-semibold text-2xl">{title}</h1>
           <List data={methods.watch('settings.dataPreview', [])} />
           <button
             type="submit"
