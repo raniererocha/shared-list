@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function BackArrowBtn() {
   const navigation = useRouter()
+
   return (
     <button
       onClick={() => navigation.push('/')}

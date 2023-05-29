@@ -26,7 +26,13 @@ export const onSubmit = async (
     console.log(error)
   }
 }
-
+export const onEditSubmit = async (
+  data: { title: string; data: string },
+  push: (data: string) => void,
+) => {
+  const parsedData = createListSchema.parse(data)
+  push(parsedData.data)
+}
 const createLink = (data: string) => {
   return navigator.clipboard.writeText(
     `${process.env.NEXT_PUBLIC_URL}/show/${data}`,
