@@ -1,6 +1,6 @@
 'use client'
 import { useForm } from 'react-hook-form'
-import { onSubmit } from './logic'
+import { onEditSubmit, onSubmit } from './logic'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Modal from '../Modal'
@@ -8,6 +8,7 @@ import List from '../List'
 import { CreateListInterface } from './types'
 import { useState } from 'react'
 import { previewDataSchema } from '@/schemas'
+import { useRouter } from 'next/navigation'
 interface ListFormProps {
   data: Pick<CreateListInterface, 'title' | 'data'> | undefined
 }
@@ -21,11 +22,17 @@ export default function ListForm({ data: payload }: ListFormProps) {
   const dataIsEmpty = data === '' || data === undefined
   const isDisabled = titleIsEmpty || dataIsEmpty
   const [isOpen, setIsOpen] = useState(false)
+  const navigator = useRouter()
+
+  const handleSave = (data: any) => {
+    if (payload === undefined) {
+      onSubmit(data, methods)
+      return
+    }
+    onEditSubmit(data, (data) => navigator.push(`/show/${data}`))
+  }
   return (
-    <form
-      onSubmit={methods.handleSubmit((data) => onSubmit(data, methods))}
-      className="h-full"
-    >
+    <form onSubmit={methods.handleSubmit(handleSave)} className="h-full">
       <div className="px-6 h-full flex flex-col gap-4 py-2">
         <h1 className="font-semibold text-2xl text-center mb-4">
           {payload !== undefined ? 'Editar' : 'Criar nova lista'}
@@ -64,7 +71,7 @@ export default function ListForm({ data: payload }: ListFormProps) {
             type="submit"
             className="px-4 py-2 bg-green-400 text-zinc-800 font-semibold w-full rounded-sm"
           >
-            Criar
+            {payload !== undefined ? 'Salvar' : 'Criar'}
           </button>
           <button
             disabled={isDisabled}
@@ -89,7 +96,7 @@ export default function ListForm({ data: payload }: ListFormProps) {
             type="submit"
             className="px-4 py-2 bg-green-400 text-zinc-800 font-semibold w-full rounded-sm"
           >
-            Criar
+            {payload !== undefined ? 'Salvar' : 'Criar'}
           </button>
         </div>
       </Modal>
