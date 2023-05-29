@@ -34,6 +34,7 @@ export const createListSchema = z
     }
   })
   .transform((args) => {
+    console.log(args)
     return {
       data: encryptValues(JSON.stringify(args)),
     }
@@ -52,3 +53,29 @@ export const previewDataSchema = z.string().transform((item) =>
     })
     .filter((item) => item.label.length > 0),
 )
+
+export const EditDataSchema = z
+  .object({
+    id: z.string(),
+    title: z.string(),
+    data: z.array(
+      z.object({
+        id: z.number(),
+        label: z.string(),
+        value: z.boolean(),
+      }),
+    ),
+  })
+  .transform((listItem) => {
+    return {
+      title: listItem.title,
+      data: listItem.data.map((item) => item.label),
+    }
+  })
+  .transform((item) => {
+    console.log(item)
+    return {
+      title: item.title,
+      data: item.data.join('\n'),
+    }
+  })
