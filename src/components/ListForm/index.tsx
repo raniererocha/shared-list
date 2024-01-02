@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { previewDataSchema } from '@/schemas'
 import { useRouter } from 'next/navigation'
 interface ListFormProps {
-  data: Pick<CreateListInterface, 'title' | 'data'> | undefined
+  data: Partial<Pick<CreateListInterface, 'id' | 'title' | 'data'>> | undefined
 }
 export default function ListForm({ data: payload }: ListFormProps) {
   const methods = useForm<CreateListInterface>({
@@ -25,7 +25,7 @@ export default function ListForm({ data: payload }: ListFormProps) {
   const navigator = useRouter()
 
   const handleSave = (data: any) => {
-    if (payload === undefined) {
+    if (!payload) {
       onSubmit(data, methods)
       return
     }

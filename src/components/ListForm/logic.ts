@@ -1,4 +1,4 @@
-import { createListSchema } from '@/schemas'
+import { createListSchema, editeListSchema } from '@/schemas'
 import { UseFormReturn } from 'react-hook-form'
 import { ZodError } from 'zod'
 import { toast } from 'react-toastify'
@@ -10,7 +10,7 @@ export const onSubmit = async (
 ) => {
   try {
     methods.clearErrors()
-    const parsedData = createListSchema.parse(data)
+    const parsedData = await createListSchema.parseAsync(data)
     createLink(parsedData.data)
     toast.success('Lista criada com sucesso!', {
       autoClose: 2000,
@@ -23,14 +23,14 @@ export const onSubmit = async (
         methods.setError(errorPath, { message: item.message })
       })
     }
-    console.log(error)
+    console.log('ERRO', error)
   }
 }
 export const onEditSubmit = async (
-  data: { title: string; data: string },
+  data: { id: string; title: string; data: string },
   push: (data: string) => void,
 ) => {
-  const parsedData = createListSchema.parse(data)
+  const parsedData = await editeListSchema.parseAsync(data)
   push(parsedData.data)
 }
 const createLink = (data: string) => {

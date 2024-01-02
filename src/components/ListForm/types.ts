@@ -1,4 +1,5 @@
 export interface CreateListInterface {
+  id: string
   title: string
   data: string
   settings: {
