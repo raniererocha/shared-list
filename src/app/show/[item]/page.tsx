@@ -50,7 +50,7 @@ export default function ListItems({
         <>
           <h1 className="font-semibold text-2xl text-center">{data.title}</h1>
           <div className="px-6 mb-6 overflow-auto">
-            <List listData={data.data} id={item} />
+            <List listData={data.data} id={item} title={data.title} />
           </div>
         </>
       )}

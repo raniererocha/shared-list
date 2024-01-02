@@ -30,10 +30,11 @@ export const createListSchema = z
         .trim()
         .split('\n')
         .map((item, index) => {
+          const hasChecked = item.endsWith('*')
           return {
             id: index,
             label: item,
-            value: false,
+            value: hasChecked,
           }
         })
         .filter((item) => item.label.length > 0),
@@ -75,10 +76,12 @@ export const editeListSchema = z
         .trim()
         .split('\n')
         .map((item, index) => {
+          const hasChecked = item.endsWith('*')
+          console.log(hasChecked)
           return {
             id: index,
             label: item,
-            value: false,
+            value: hasChecked,
           }
         })
         .filter((item) => item.label.length > 0),
@@ -126,7 +129,12 @@ export const EditDataSchema = z
     return {
       id: listItem.id,
       title: listItem.title,
-      data: listItem.data.map((item) => item.label),
+      data: listItem.data.map((item) => {
+        if (item.value) {
+          return item.label + '*'
+        }
+        return item.label
+      }),
     }
   })
   .transform((item) => {
@@ -140,6 +148,7 @@ export const EditDataSchema = z
 export const updateListSchema = z
   .object({
     id: z.string(),
+    title: z.string(),
     data: z.array(
       z.object({
         id: z.number(),

@@ -1,35 +1,18 @@
 import { Frown } from 'lucide-react'
-import ListItem, { ListItemProps } from '../ListItem'
+import ListItem, { ItemProps, ListItemProps } from '../ListItem'
 import { useForm, Controller } from 'react-hook-form'
 import { updateListSchema } from '@/schemas'
 
-interface ListData extends Omit<ListItemProps, 'id'> {
+export interface ListData extends Omit<ItemProps, 'id'> {
   id: number | string
 }
 interface ListDataProps {
   listData: ListData[]
-  id: string
+  id?: string
+  title?: string
 }
-export default function List({ listData = [], id }: ListDataProps) {
-  // crie uma função que transforme um array de objetos que tem id, label e value em um objeto cuja a chave seja "data-"+id e o valor seja o value
-  // exemplo:
-  // const data = [
-  //   { id: 1, label: 'item 1', value: true },
-  //   { id: 2, label: 'item 2', value: false },
-  //   { id: 3, label: 'item 3', value: true },
-  // ]
-  // const result = {
-  //   'data-1': true,
-  //   'data-2': false,
-  //   'data-3': true,
-  // }
-  // const result = data.reduce((acc, item) => {
-  //   acc['data-' + item.id] = item.value
-  //   return acc
-  // }, {})
-  // console.log(result)
-
-  const { control, handleSubmit } = useForm({
+export default function List({ listData = [], id, title }: ListDataProps) {
+  const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: listData.reduce((acc: any, item) => {
       const key = 'data-' + item.id
       acc[key] = item.value
@@ -50,7 +33,7 @@ export default function List({ listData = [], id }: ListDataProps) {
                 value: formData['data-' + item.id],
               }
             })
-            await updateListSchema.parseAsync({ id, data: formatedData })
+            await updateListSchema.parseAsync({ id, data: formatedData, title })
           })}
         >
           <div className="flex flex-col gap-1 py-6 w-full h-full">
@@ -68,14 +51,19 @@ export default function List({ listData = [], id }: ListDataProps) {
                     onBlur={onBlur}
                     name={name}
                     inputRef={ref}
+                    setValue={setValue}
+                    watch={watch}
                   />
                 )}
               />
             ))}
           </div>
-          <button className="mt-4 px-4 py-2 bg-green-400 text-zinc-800 font-semibold w-full rounded-sm">
-            Salvar
-          </button>
+
+          {id && (
+            <button className="mt-4 px-4 py-2 bg-green-400 text-zinc-800 font-semibold w-full rounded-sm">
+              Salvar
+            </button>
+          )}
         </form>
       </div>
     )

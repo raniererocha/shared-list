@@ -1,8 +1,10 @@
+import { ListData } from '../List'
+
 export interface CreateListInterface {
   id: string
   title: string
   data: string
   settings: {
-    dataPreview: Array<{ id: number; label: string; value: boolean }>
+    dataPreview: Array<{ id: number | string; label: string; value: boolean }>
   }
 }

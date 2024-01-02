@@ -91,7 +91,7 @@ export default function ListForm({ data: payload }: ListFormProps) {
       <Modal isOpen={isOpen} onClose={() => setIsOpen((prev) => !prev)}>
         <div className="flex flex-col gap-4 py-4 ">
           <h1 className="text-center font-semibold text-2xl">{title}</h1>
-          <List data={methods.watch('settings.dataPreview', [])} />
+          <List listData={methods.watch('settings.dataPreview', [])} />
           <button
             type="submit"
             className="px-4 py-2 bg-green-400 text-zinc-800 font-semibold w-full rounded-sm"
