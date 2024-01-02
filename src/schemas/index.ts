@@ -1,6 +1,12 @@
-import { client } from '@/services/supabase'
+// import { client } from '@/services/supabase'
+import { createClient } from '@supabase/supabase-js'
 import { encryptValues } from '@/utils/cripto'
 import { z } from 'zod'
+
+const client = createClient(
+  process.env.NEXT_PUBLIC_SUPA_URL ?? '',
+  process.env.NEXT_PUBLIC_SUPA_KEY ?? '',
+)
 
 export const createListSchema = z
   .object({

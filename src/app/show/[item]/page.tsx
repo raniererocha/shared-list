@@ -5,7 +5,13 @@ import BackArrowBtn from '@/components/BackArrowBtn'
 import EditBtn from '@/components/EditBtn'
 import List from '@/components/List'
 import { decryptValues } from '@/utils/cripto'
-import { client } from '@/services/supabase'
+import { createClient } from '@supabase/supabase-js'
+// import { client } from '@/services/supabase'
+
+const client = createClient(
+  process.env.NEXT_PUBLIC_SUPA_URL ?? '',
+  process.env.NEXT_PUBLIC_SUPA_KEY ?? '',
+)
 
 export default function ListItems({
   params: { item },

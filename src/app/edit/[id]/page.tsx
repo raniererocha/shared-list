@@ -4,7 +4,13 @@ import BackArrowBtn from '@/components/BackArrowBtn'
 import ListForm from '@/components/ListForm'
 import { EditDataSchema } from '@/schemas'
 import { decryptValues } from '@/utils/cripto'
-import { client } from '@/services/supabase'
+import { createClient } from '@supabase/supabase-js'
+// import { client } from '@/services/supabase'
+
+const client = createClient(
+  process.env.NEXT_PUBLIC_SUPA_URL ?? '',
+  process.env.NEXT_PUBLIC_SUPA_KEY ?? '',
+)
 
 export default function EditList({
   params: { id },
