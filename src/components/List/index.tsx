@@ -1,5 +1,5 @@
 import { Frown } from 'lucide-react'
-import ListItem, { ItemProps, ListItemProps } from '../ListItem'
+import ListItem, { ItemProps } from '../ListItem'
 import { useForm, Controller } from 'react-hook-form'
 import { updateListSchema } from '@/schemas'
 

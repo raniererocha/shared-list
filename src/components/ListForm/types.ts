@@ -1,5 +1,3 @@
-import { ListData } from '../List'
-
 export interface CreateListInterface {
   id: string
   title: string
