@@ -9,7 +9,6 @@ interface ListData extends ListItemProps {
 interface ListDataProps {
   listData: ListData[]
   id: string
-  title: string
 }
 export default function List({ listData = [], id }: ListDataProps) {
   // crie uma função que transforme um array de objetos que tem id, label e value em um objeto cuja a chave seja "data-"+id e o valor seja o value
