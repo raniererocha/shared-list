@@ -3,7 +3,7 @@ import ListItem, { ListItemProps } from '../ListItem'
 import { useForm, Controller } from 'react-hook-form'
 import { updateListSchema } from '@/schemas'
 
-interface ListData extends ListItemProps {
+interface ListData extends Omit<ListItemProps, 'id'> {
   id: number | string
 }
 interface ListDataProps {
