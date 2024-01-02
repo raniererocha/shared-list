@@ -2,12 +2,21 @@
 import { useState } from 'react'
 
 export interface ListItemProps {
+  id: number
   label: string
   value: boolean
 }
 
-export default function ListItem({ label = '', value = false }: ListItemProps) {
-  const [isChecked, setIsChecked] = useState(false)
+export default function ListItem({
+  label = '',
+  value = false,
+  id,
+  onChange,
+  onBlur,
+  name,
+  inputRef,
+}: ListItemProps) {
+  /*  const [value, setvalue] = useState(value) */
   const italic = label.startsWith('-')
   const bold = label.startsWith('#')
   const underline = label.startsWith('_')
@@ -27,11 +36,12 @@ export default function ListItem({ label = '', value = false }: ListItemProps) {
     return (
       <div className={`flex gap-2 pl-4 items-center`}>
         <input
+          onBlur={onBlur}
           type="checkbox"
-          checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
+          checked={value}
+          onChange={onChange}
         />
-        <label className={`${isChecked ? 'line-through' : ''}`}>
+        <label className={`${value ? 'line-through' : ''}`}>
           {sanitizedLabel}
         </label>
       </div>
@@ -49,14 +59,15 @@ export default function ListItem({ label = '', value = false }: ListItemProps) {
     return (
       <div className="flex gap-2 items-center">
         <input
+          onBlur={onBlur}
           type="checkbox"
-          checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
+          checked={value}
+          onChange={onChange}
         />
         <label
           className={`${italic && 'italic'} ${bold && 'font-bold'} ${
             underline && 'underline'
-          } ${isChecked ? 'line-through' : ''}`}
+          } ${value ? 'line-through' : ''}`}
         >
           {label.slice(1)}
         </label>
@@ -67,11 +78,12 @@ export default function ListItem({ label = '', value = false }: ListItemProps) {
     return (
       <div className="flex gap-2 items-center">
         <input
+          onBlur={onBlur}
           type="checkbox"
-          checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
+          checked={value}
+          onChange={onChange}
         />
-        <label className={`underline ${isChecked ? 'line-through' : ''}`}>
+        <label className={`underline ${value ? 'line-through' : ''}`}>
           {label.slice(1)}
         </label>
       </div>
@@ -80,11 +92,12 @@ export default function ListItem({ label = '', value = false }: ListItemProps) {
   return (
     <div className="flex gap-2 items-center">
       <input
+        onBlur={onBlur}
         type="checkbox"
-        checked={isChecked}
-        onChange={() => setIsChecked((prev) => !prev)}
+        checked={value}
+        onChange={onChange}
       />
-      <label className={`${isChecked ? 'line-through' : ''}`}>{label}</label>
+      <label className={`${value ? 'line-through' : ''}`}>{label}</label>
     </div>
   )
 }

@@ -136,3 +136,26 @@ export const EditDataSchema = z
       data: item.data.join('\n'),
     }
   })
+
+export const updateListSchema = z
+  .object({
+    id: z.string(),
+    data: z.array(
+      z.object({
+        id: z.number(),
+        label: z.string(),
+        value: z.boolean(),
+      }),
+    ),
+  })
+  .transform(async (args) => {
+    await client
+      .from('lists')
+      .update({ content: args })
+      .eq('id', args.id)
+      .select()
+      .single()
+    return {
+      data: args.id, // encryptValues(JSON.stringify(args)),
+    }
+  })
