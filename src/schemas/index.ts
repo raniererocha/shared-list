@@ -1,6 +1,5 @@
 // import { client } from '@/services/supabase'
 import { createClient } from '@supabase/supabase-js'
-import { encryptValues } from '@/utils/cripto'
 import { z } from 'zod'
 
 const client = createClient(
@@ -86,7 +85,7 @@ export const editeListSchema = z
     }
   })
   .transform(async (args) => {
-    const { data } = await client
+    await client
       .from('lists')
       .update({ content: args })
       .eq('id', args.id)

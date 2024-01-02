@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import BackArrowBtn from '@/components/BackArrowBtn'
 import EditBtn from '@/components/EditBtn'
 import List from '@/components/List'
-import { decryptValues } from '@/utils/cripto'
 import { createClient } from '@supabase/supabase-js'
 // import { client } from '@/services/supabase'
 

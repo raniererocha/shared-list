@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import BackArrowBtn from '@/components/BackArrowBtn'
 import ListForm from '@/components/ListForm'
 import { EditDataSchema } from '@/schemas'
-import { decryptValues } from '@/utils/cripto'
 import { createClient } from '@supabase/supabase-js'
 // import { client } from '@/services/supabase'
 
