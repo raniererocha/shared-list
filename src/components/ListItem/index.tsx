@@ -4,6 +4,10 @@ export interface ListItemProps {
   id: number
   label: string
   value: boolean
+  onChange: (...event: any[]) => void
+  onBlur: () => void
+  name: string
+  inputRef: any
 }
 
 export default function ListItem({
