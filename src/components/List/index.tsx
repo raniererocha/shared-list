@@ -30,8 +30,9 @@ export default function List({ listData = [], id }: ListDataProps) {
   // console.log(result)
 
   const { control, handleSubmit } = useForm({
-    defaultValues: listData.reduce((acc, item) => {
-      acc['data-' + item.id] = item.value
+    defaultValues: listData.reduce((acc: any, item) => {
+      const key = 'data-' + item.id
+      acc[key] = item.value
       return acc
     }, {}),
   })
