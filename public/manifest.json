@@ -23,5 +23,7 @@
   "background_color": "#FFFFFF",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "id": "shared-links-app",
+  "description": "Shared Links - Ajudando a compartilhar listas pela internet"
 }
