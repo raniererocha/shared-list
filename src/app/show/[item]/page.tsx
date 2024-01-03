@@ -5,7 +5,9 @@ import BackArrowBtn from '@/components/BackArrowBtn'
 import EditBtn from '@/components/EditBtn'
 import List from '@/components/List'
 import { createClient } from '@supabase/supabase-js'
-// import { client } from '@/services/supabase'
+import { showTime } from '@/utils/datetime'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const client = createClient(
   process.env.NEXT_PUBLIC_SUPA_URL ?? '',
@@ -28,6 +30,7 @@ export default function ListItems({
           id: contentData!.id,
           title: contentData!.content.title,
           data: contentData!.content.data,
+          last_update: contentData!.updated_at,
         }
         setData(payload)
         setLoading(false)
@@ -39,7 +42,6 @@ export default function ListItems({
     data: undefined,
   })
   const [loading, setLoading] = useState(true)
-  /*  const obj = JSON.parse(decryptValues(unescape(item))) */
   return (
     <div className="w-screen h-screen flex flex-col py-4">
       <div className="w-full flex justify-between">
@@ -48,12 +50,19 @@ export default function ListItems({
       </div>
       {!loading && (
         <>
-          <h1 className="font-semibold text-2xl text-center">{data.title}</h1>
+          <h1 className="font-semibold text-2xl text-center flex flex-col justify-center align-middle">
+            {data.title}
+            <span className="font-light text-base">
+              ultima atualização {showTime(data.last_update)}
+            </span>
+          </h1>
+
           <div className="px-6 mb-6 overflow-auto">
             <List listData={data.data} id={item} title={data.title} />
           </div>
         </>
       )}
+      <ToastContainer theme="dark" />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { CreateListInterface } from './types'
 import { useState } from 'react'
 import { previewDataSchema } from '@/schemas'
 import { useRouter } from 'next/navigation'
+
 interface ListFormProps {
   data: Partial<Pick<CreateListInterface, 'id' | 'title' | 'data'>> | undefined
 }
