@@ -2,6 +2,8 @@ import { Frown } from 'lucide-react'
 import ListItem, { ItemProps } from '../ListItem'
 import { useForm, Controller } from 'react-hook-form'
 import { updateListSchema } from '@/schemas'
+import { toast } from 'react-toastify'
+import { useRouter, usePathname } from 'next/navigation'
 
 export interface ListData extends Omit<ItemProps, 'id'> {
   id: number | string
@@ -12,6 +14,8 @@ interface ListDataProps {
   title?: string
 }
 export default function List({ listData = [], id, title }: ListDataProps) {
+  const router = useRouter()
+  const pathname = usePathname()
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: listData.reduce((acc: any, item) => {
       const key = 'data-' + item.id
@@ -27,13 +31,24 @@ export default function List({ listData = [], id, title }: ListDataProps) {
       <div className="flex flex-col">
         <form
           onSubmit={handleSubmit(async (formData) => {
-            const formatedData = listData.map((item) => {
-              return {
-                ...item,
-                value: formData['data-' + item.id],
-              }
-            })
-            await updateListSchema.parseAsync({ id, data: formatedData, title })
+            try {
+              const formatedData = listData.map((item) => {
+                return {
+                  ...item,
+                  value: formData['data-' + item.id],
+                }
+              })
+              await updateListSchema.parseAsync({
+                id,
+                data: formatedData,
+                title,
+              })
+              toast.success('Atualizado com sucesso!', {
+                onClose: () => window.location.reload(),
+              })
+            } catch (error) {
+              toast.error('Erro inesperado')
+            }
           })}
         >
           <div className="flex flex-col gap-1 py-6 w-full h-full">
