@@ -19,7 +19,6 @@ export default function ListItems({
 }: {
   params: { item: string }
 }) {
-  const [forceUpdate, setForceUpdate] = useState(0)
   useEffect(() => {
     client
       .from('lists')
