@@ -3,7 +3,6 @@ import ListItem, { ItemProps } from '../ListItem'
 import { useForm, Controller } from 'react-hook-form'
 import { updateListSchema } from '@/schemas'
 import { toast } from 'react-toastify'
-import { useRouter, usePathname } from 'next/navigation'
 
 export interface ListData extends Omit<ItemProps, 'id'> {
   id: number | string
@@ -14,8 +13,6 @@ interface ListDataProps {
   title?: string
 }
 export default function List({ listData = [], id, title }: ListDataProps) {
-  const router = useRouter()
-  const pathname = usePathname()
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: listData.reduce((acc: any, item) => {
       const key = 'data-' + item.id
