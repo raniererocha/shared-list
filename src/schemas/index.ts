@@ -130,9 +130,9 @@ export const EditDataSchema = z
       id: listItem.id,
       title: listItem.title,
       data: listItem.data.map((item) => {
-        if (item.value) {
+        /* if (item.value) {
           return item.label + '*'
-        }
+        } */
         return item.label
       }),
     }
